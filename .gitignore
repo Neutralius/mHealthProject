@@ -1,0 +1,25 @@
+# Node.js dependencies
+/node_modules/
+
+# VSCode settings
+.vscode/
+
+# WebStorm settings
+.idea/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Environment variables
+.env
+
+# Build directories
+/dist/
+/build/
+
+# Temporary files
+*.swp
