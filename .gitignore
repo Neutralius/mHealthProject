@@ -1,25 +1,21 @@
-# Node.js dependencies
-/node_modules/
-
-# VSCode settings
-.vscode/
-
-# WebStorm settings
-.idea/
-
-# OS-specific files
-.DS_Store
 Thumbs.db
-
-# Log files
+.DS_Store
+node_modules
 *.log
-
-# Environment variables
+config.json
+.eslintcache
+.stylelintcache
+.nyc_output
+coverage
+test-reports
+releases
 .env
-
-# Build directories
-/dist/
-/build/
-
-# Temporary files
-*.swp
+package-lock.json
+build/**
+data
+out
+forge.tmp.json
+forge-bundle
+maps-data
+.firebase
+build
