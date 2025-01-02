@@ -7,6 +7,7 @@ const LandingPage = () => (
     maxWidth={false}
     disableGutters
   >
+    Hello World!
     Landing
   </Container>
 )

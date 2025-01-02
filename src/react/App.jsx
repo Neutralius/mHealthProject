@@ -22,12 +22,12 @@ const theme = createTheme({
     scenidBlue: { main: '#3200BE', gradient: 'linear-gradient(to bottom, #3200BE, #280097)', gradientHorizontal: 'linear-gradient(to left, #3200BE, #280097)' },
     scenidDarkBlue: { main: '#280097' },
     background: {
-      default: '#05F782',
-      primary: '#05F782'
+      default: '#f70529',
+      primary: '#f7050d'
     },
     text: {
-      primary: '#000000',
-      secondary: '#EA4A4A'
+      primary: '#ffffff',
+      secondary: '#ffffff'
     }
   },
   components: {
