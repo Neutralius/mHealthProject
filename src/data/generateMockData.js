@@ -1,4 +1,4 @@
-// Mock Data für Visualisierungen
+// Mock Data für Visualisierungen bis wir real data haben
 // Liste mit Berliner Krankenhäusern
 // Quelle: https://medium.com/@biplavmazumdar5/mocking-data-in-react-js-or-javascript-3f278ba7f550
 
