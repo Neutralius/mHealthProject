@@ -6,21 +6,21 @@ import formatWartezeit from "./formatWartezeit.js";
 
 const generateMockData = () => {
     const krankenhaeuser = [
-        {id: 1, name: "Charité Campus Mitte"},
-        {id: 2, name: "Charité Campus Benjamin Franklin"},
-        {id: 3, name: "Charité Campus Virchow-Klinikum"},
-        {id: 4, name: "Vivantes Klinikum Friedrichshain"},
-        {id: 5, name: "St. Hedwig-Krankenhaus"},
-        {id: 6, name: "DRK Kliniken Berlin Westend"},
-        {id: 7, name: "Unfallkrankenhaus Berlin"},
-        {id: 8, name: "Jüdisches Krankenhaus Berlin"},
-        {id: 9, name: "Vivantes Auguste-Viktoria-Klinikum"},
-        {id: 10, name: "Krankenhaus Bethel Berlin"},
-        {id: 11, name: "Helios Klinikum Berlin-Buch"},
-        {id: 12, name: "DRK Kliniken Köpenick"},
-        {id: 13, name: "Sana-Klinikum Lichtenberg"},
-        {id: 14, name: "Vivantes Klinikum Spandau"},
-        {id: 15, name: "St. Joseph Krankenhaus"},
+        {id: 1, Name: "Charité Campus Mitte"},
+        {id: 2, Name: "Charité Campus Benjamin Franklin"},
+        {id: 3, Name: "Charité Campus Virchow-Klinikum"},
+        {id: 4, Name: "Vivantes Klinikum Friedrichshain"},
+        {id: 5, Name: "St. Hedwig-Krankenhaus"},
+        {id: 6, Name: "DRK Kliniken Berlin Westend"},
+        {id: 7, Name: "Unfallkrankenhaus Berlin"},
+        {id: 8, Name: "Jüdisches Krankenhaus Berlin"},
+        {id: 9, Name: "Vivantes Auguste-Viktoria-Klinikum"},
+        {id: 10, Name: "Krankenhaus Bethel Berlin"},
+        {id: 11, Name: "Helios Klinikum Berlin-Buch"},
+        {id: 12, Name: "DRK Kliniken Köpenick"},
+        {id: 13, Name: "Sana-Klinikum Lichtenberg"},
+        {id: 14, Name: "Vivantes Klinikum Spandau"},
+        {id: 15, Name: "St. Joseph Krankenhaus"},
     ];
 
     // Quelle: https://react.dev/learn/rendering-lists
@@ -28,10 +28,8 @@ const generateMockData = () => {
         const wartezeit = Math.floor(Math.random() * 180 + 20);
         return {
         ...krankenhaus,
-        patienten: Math.floor(Math.random() * 30 + 10),
-        wartezeit,
-        wartezeitFormat: formatWartezeit(wartezeit),
-        auslastung: Math.floor(Math.random() * 30 + 70),
+        Patienten: Math.floor(Math.random() * 30 + 10),
+        Wartezeit: formatWartezeit(wartezeit)
         };
     });
 };
