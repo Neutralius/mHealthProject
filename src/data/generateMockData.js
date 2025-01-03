@@ -2,6 +2,8 @@
 // Liste mit Berliner Krankenhäusern
 // Quelle: https://medium.com/@biplavmazumdar5/mocking-data-in-react-js-or-javascript-3f278ba7f550
 
+import formatWartezeit from "./formatWartezeit.js";
+
 const generateMockData = () => {
     const krankenhaeuser = [
         {id: 1, name: "Charité Campus Mitte"},
@@ -22,12 +24,16 @@ const generateMockData = () => {
     ];
 
     // Quelle: https://react.dev/learn/rendering-lists
-    return krankenhaeuser.map((krankenhaus) => ({
+    return krankenhaeuser.map((krankenhaus) => {
+        const wartezeit = Math.floor(Math.random() * 180 + 20);
+        return {
         ...krankenhaus,
         patienten: Math.floor(Math.random() * 30 + 10),
-        wartezeit: Math.floor(Math.random() * 180 + 20),
+        wartezeit,
+        wartezeitFormat: formatWartezeit(wartezeit),
         auslastung: Math.floor(Math.random() * 30 + 70),
-    }));
+        };
+    });
 };
 
 export default generateMockData;
