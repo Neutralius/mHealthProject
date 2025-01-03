@@ -88,6 +88,7 @@
     "@mui/material": "^6.0.2",
     "@mui/styles": "^6.0.2",
     "@mui/system": "^6.0.2",
+    "@mui/x-data-grid": "^7.23.5",
     "buffer": "^6.0.3",
     "classnames": "2.5.1",
     "crypto-browserify": "^3.12.0",

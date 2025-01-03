@@ -1,6 +1,6 @@
 import React from 'react'
-
 import { Container } from '@mui/material'
+import DataGridDemo from "../../Components/DataGrid/DataGrid.jsx";
 
 const LandingPage = () => (
   <Container
@@ -9,6 +9,7 @@ const LandingPage = () => (
   >
     Hello World!
     Landing
+    <DataGridDemo />
   </Container>
 )
 
