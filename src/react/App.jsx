@@ -1,11 +1,11 @@
-import React from 'react'
-import { createRoot } from 'react-dom/client'
+import 'leaflet/dist/leaflet.css';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
-import { CssBaseline } from '@mui/material'
+import { CssBaseline } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-
-import RootRoutes from './Routes/RootRoutes'
+import RootRoutes from './Routes/RootRoutes';
 
 const theme = createTheme({
   typography: {
@@ -34,9 +34,9 @@ const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: `
         html, body { width: 100%; height: 100%; }
-        body { width: 100%; height: 100%; overflow: hidden; }
-        #app { display: flex; width: 100%; height: 100%; overflow: hidden; }
-      `
+        body { width: 100%; height: 100%; }
+        #app { display: flex; width: 100%; height: 100%; }
+    `
     }
   }
 })

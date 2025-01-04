@@ -1,6 +1,7 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import React from 'react';
 
 // Fix für fehlende Standard-Icons
 delete L.Icon.Default.prototype._getIconUrl;
@@ -23,7 +24,7 @@ const MapWithMarkers = () => {
     ];
 
     return (
-        <MapContainer style={{ height: '500px', width: '100%' }} center={[50, 10]} zoom={5}>
+        <MapContainer style={{ height: '500px', width: '50%' }} center={[50, 10]} zoom={10}>
             <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
