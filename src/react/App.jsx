@@ -6,6 +6,7 @@ import { CssBaseline } from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 import AppLayout from './Pages/Layout/AppLayout'
+import RootRoutes from './Routes/RootRoutes'
 
 const theme = createTheme({
   components: {
@@ -37,3 +38,7 @@ root.render(
     <AppLayout />
   </ThemeProvider>
 )
+
+const App = () => <RootRoutes />
+
+export default App
