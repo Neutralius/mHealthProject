@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Button, Typography, Stack, Paper } from '@mui/material'
 
 const Modal = ({ onConfirm }) => (
-  // Modal mit unscharfem Hintergrund
   <div
     style={{
       position: 'absolute',
@@ -11,15 +10,14 @@ const Modal = ({ onConfirm }) => (
       left: 0,
       width: '100%',
       height: '100%',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Abdunkelung
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      backdropFilter: 'blur(8px)', // Unschärfe für den Hintergrund
-      zIndex: 10 // Sicherstellen, dass das Modal im Vordergrund liegt
+      backdropFilter: 'blur ', // Hintergrund schwammig
+      zIndex: 10
     }}
   >
-    {/* Popup */}
     <Paper
       elevation={3}
       sx={{
@@ -31,17 +29,12 @@ const Modal = ({ onConfirm }) => (
         backgroundColor: (theme) => theme.palette.background.default
       }}
     >
-      {/* Titel */}
       <Typography variant="h6" sx={{ marginBottom: 2 }}>
         Standort freigeben
       </Typography>
-
-      {/* Nachricht */}
       <Typography variant="body1" sx={{ marginBottom: 3 }}>
         Wollen Sie den Standort freigeben?
       </Typography>
-
-      {/* Aktionstasten */}
       <Stack direction="row" justifyContent="center" spacing={2}>
         <Button variant="contained" color="primary" onClick={onConfirm}>
           Ja
@@ -56,19 +49,17 @@ Modal.propTypes = {
   onConfirm: PropTypes.func.isRequired
 }
 
-const ModalLayout = ({ children, showModal, onModalConfirm }) => (
+const LocationModalLayout = ({ children, showModal, onModalConfirm }) => (
   <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-    {/* Modal wird angezeigt, falls showModal aktiv ist */}
     {showModal && <Modal onConfirm={onModalConfirm} />}
-    {/* Inhalte der App */}
     {children}
   </div>
 )
 
-ModalLayout.propTypes = {
+LocationModalLayout.propTypes = {
   children: PropTypes.node.isRequired,
   showModal: PropTypes.bool.isRequired,
   onModalConfirm: PropTypes.func.isRequired
 }
 
-export default ModalLayout
+export default LocationModalLayout

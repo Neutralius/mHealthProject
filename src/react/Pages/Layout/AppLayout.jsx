@@ -15,19 +15,26 @@ import {
 } from '@mui/icons-material'
 
 import AppLogo from '../../../assets/favicon.svg'
-import ModalLayout from './ModalLayout'
+import LocationModalLayout from './LocationModalLayout'
+import LocationInfoModal from './LocationInfoModal'
 
 const borderRadius = 6
 
 const AppLayout = () => {
   const [showModal, setShowModal] = useState(true)
-
+  const [location, setLocation] = useState(null)
+  const [showLocationInfo, setShowLocationInfo] = useState(false)
   const handleModalConfirm = () => {
+    const storedLocation = '52.448818, 13.386068' // sind Koordinaten hilfreich für die Map?
+    setLocation(storedLocation)
     setShowModal(false)
+    setShowLocationInfo(true)
   }
-
+  const handleCloseLocationInfo = () => {
+    setShowLocationInfo(false)
+  }
   return (
-    <ModalLayout showModal={showModal} onModalConfirm={handleModalConfirm}>
+    <LocationModalLayout showModal={showModal} onModalConfirm={handleModalConfirm}>
       <Stack
         direction="column"
         sx={{
@@ -37,7 +44,6 @@ const AppLayout = () => {
           overflow: 'hidden'
         }}
       >
-        {/* Header */}
         <Stack
           direction="row"
           justifyContent="center"
@@ -73,7 +79,7 @@ const AppLayout = () => {
                 }}
               />
               <Typography variant="h5" fontWeight="bold">
-                Auslastung Notaufnahmen Berlin
+                Notaufnahmen Berlin
               </Typography>
             </Stack>
             <Paper
@@ -107,10 +113,15 @@ const AppLayout = () => {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <Typography variant="h3">
-                    App Content
+                  <Typography variant="h6">
+                    hier soll eine Map sein
                   </Typography>
                 </Stack>
+                <LocationInfoModal
+                  open={showLocationInfo}
+                  location={location}
+                  onClose={handleCloseLocationInfo}
+                />
                 <BottomNavigation
                   showLabels
                   value={0}
@@ -143,7 +154,7 @@ const AppLayout = () => {
           </Container>
         </Stack>
       </Stack>
-    </ModalLayout>
+    </LocationModalLayout>
   )
 }
 export default AppLayout
