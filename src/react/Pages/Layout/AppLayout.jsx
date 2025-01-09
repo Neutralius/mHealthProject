@@ -7,15 +7,14 @@ import {
   BottomNavigation,
   BottomNavigationAction
 } from '@mui/material'
-
 import {
   Restore as RestoreIcon,
   Favorite as FavoriteIcon,
   Person as ProfileIcon
 } from '@mui/icons-material'
-
 import AppLogo from '../../../assets/favicon.svg'
 import ModalLayout from './ModalLayout'
+import LandingPage from '../LandingPage/LandingPage.jsx'
 
 const borderRadius = 6
 
@@ -54,7 +53,7 @@ const AppLayout = () => {
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              height: '100%'
+              height: '75%'
             }}
           >
             <Stack
@@ -106,10 +105,9 @@ const AppLayout = () => {
                   flex="1 1 auto"
                   justifyContent="center"
                   alignItems="center"
+                  sx={{ width: '100%' }}
                 >
-                  <Typography variant="h3">
-                    App Content
-                  </Typography>
+                  <LandingPage />
                 </Stack>
                 <BottomNavigation
                   showLabels
