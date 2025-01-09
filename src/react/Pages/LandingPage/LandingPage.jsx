@@ -7,9 +7,8 @@ const LandingPage = () => (
     <Container
         maxWidth={false}
         disableGutters
-        style={{height: "auto", width: '100%'}}
+        style={{height: "100%", width: '100%'}}
     >
-        <h1>Map:</h1>
         <MapWithMarkers />
     </Container>
 )
