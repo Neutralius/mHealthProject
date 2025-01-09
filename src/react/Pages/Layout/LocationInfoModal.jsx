@@ -1,50 +1,44 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Modal, Paper, Typography, Button } from '@mui/material'
+import { Modal, Paper, Typography } from '@mui/material'
+import { Snackbar } from '@mui/base'
 
-const LocationInfoModal = ({ open, location, onClose }) => (
-  <Modal
-    open={open}
-    onClose={onClose}
-    sx={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }}
-  >
-    <Paper
-      elevation={3}
+const LocationInfoModal = ({ showModal,
+  onClose }) => (
+    <Modal
+      open={showModal}
+      onClose={onClose}
       sx={{
-        width: '90%',
-        maxWidth: '300px',
-        padding: 3,
-        borderRadius: 2,
-        textAlign: 'center'
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
       }}
     >
-      <Typography variant="h6" sx={{ marginBottom: 2 }}>
-        Standort gespeichert
-      </Typography>
-      <Typography variant="body2">{location}</Typography>
-      <Button
-        variant="contained"
-        onClick={onClose}
-        sx={{ marginTop: 3 }}
+      <Paper
+        elevation={3}
+        sx={{
+          width: '90%',
+          maxWidth: '300px',
+          padding: 3,
+          borderRadius: 2,
+          textAlign: 'center'
+        }}
       >
-        OK
-      </Button>
-    </Paper>
-  </Modal>
+        <Typography variant="h6" sx={{ marginBottom: 2 }}>
+          Standort gespeichert!
+        </Typography>
+        <Snackbar
+          open={showModal}
+          autoHideDuration={2000}
+          onClose={onClose}
+          message="Standort gespeichert!"
+        />
+      </Paper>
+    </Modal>
 )
 
 LocationInfoModal.propTypes = {
-  open: PropTypes.bool.isRequired, // Gibt an, ob das Modal angezeigt werden soll
-  location: PropTypes.string, // Der gespeicherte Standort
-  onClose: PropTypes.func.isRequired // Funktion zum Schließen des Modals
+  showModal: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired
 }
-
-LocationInfoModal.defaultProps = {
-  location: '' // Default-Wert, falls kein Standort übergeben wird
-}
-
 export default LocationInfoModal
