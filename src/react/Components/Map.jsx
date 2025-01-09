@@ -20,11 +20,12 @@ const MapWithMarkers = () => {
         { position: [52.46162097791152, 13.346515898211988], text: 'Vivantes Auguste-Viktoria-Klinikum' },
         { position: [52.54979097205315, 13.205673798014406], text: 'Vivantes Klinikum Spandau' },
         { position: [52.58987465043478, 13.309370415667551], text: 'Vivantes Humboldt-Klinikum' },
-        {position: [52.51634963490139, 13.377652149017736], text: 'Standort'}
+
     ];
+    const playerPosition = {position: [52.51634963490139, 13.377652149017736], text: 'Standort'}
 
     return (
-        <MapContainer style={{ height: '500px', width: '50%' }} center={[50, 10]} zoom={10}>
+        <MapContainer style={{ height: '100%', width: '100%' }} center={playerPosition.position} zoom={15}>
             <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -34,6 +35,9 @@ const MapWithMarkers = () => {
                     <Popup>{point.text}</Popup>
                 </Marker>
             ))}
+            <Marker position={playerPosition.position}>
+                <Popup>{playerPosition.text}</Popup>
+            </Marker>
         </MapContainer>
     );
 };
