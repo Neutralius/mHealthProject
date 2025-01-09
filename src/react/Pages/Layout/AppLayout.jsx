@@ -38,10 +38,10 @@ const AppLayout = () => {
   }
   const handleCloseLocationInfo = () => {
     setShowLocationInfo(false)
-  }
+  } // Schließt Zustimmungs-Modoal
   const handleCloseDeclineModal = () => {
     setShowDeclineModal(false)
-  }
+  } // Schließt Ablehnungs-Modal
   return (
     <>
       <LocationModalLayout

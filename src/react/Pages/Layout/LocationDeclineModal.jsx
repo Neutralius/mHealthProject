@@ -24,7 +24,7 @@ const LocationDeclineModal = ({ showModal, onClose }) => (
       }}
     >
       <Typography variant="h6" sx={{ marginBottom: 2 }}>
-        Standort gespeichert!
+        Standort abgelehnt!
       </Typography>
       <Snackbar
         open={showModal}
