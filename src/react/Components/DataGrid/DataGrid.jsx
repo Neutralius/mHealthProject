@@ -30,7 +30,7 @@ const columns = [
   }
 ]
 
-export default function DataGridDemo() {
+export default () => {
   const rows = generateMockData()
 
   return (
@@ -46,7 +46,7 @@ export default function DataGridDemo() {
           }
         }}
         pageSizeOptions={[10]}
-        checkboxSelection
+        // checkboxSelection
         disableRowSelectionOnClick
       />
     </Box>
