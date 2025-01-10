@@ -20,157 +20,158 @@ import LocationInfoModal from './LocationInfoModal'
 import LocationDeclineModal from './LocationDeclineModal'
 
 const borderRadius = 6
+const [showModal, setShowModal] = useState(true)
+const [location, setLocation] = useState(null)
+const [showLocationInfo, setShowLocationInfo] = useState(false)
+const [showLocationDecline, setShowDeclineModal] = useState(false)
+const handleModalConfirm = () => {
+  const storedLocation = '52.448818, 13.386068' // sind Koordinaten hilfreich für die Map?
+  setLocation(storedLocation) // Setzt die hardgecodeten Koordiniaten
+  setShowModal(false) // schließt  Haupt-Modal
+  setShowLocationInfo(true)
+}
 
-const AppLayout = () => {
-  const [showModal, setShowModal] = useState(true)
-  const [location, setLocation] = useState(null)
-  const [showLocationInfo, setShowLocationInfo] = useState(false)
-  const [showLocationDecline, setShowDeclineModal] = useState(false)
-  const handleModalConfirm = () => {
-    const storedLocation = '52.448818, 13.386068' // sind Koordinaten hilfreich für die Map?
-    setLocation(storedLocation) // Setzt die hardgecodeten Koordiniaten
-    setShowModal(false) // schließt  Haupt-Modal
-    setShowLocationInfo(true)
-  }
-  const handleModalDecline = () => {
-    setShowModal(false) // Haupt-Modal schließen
-    setShowDeclineModal(true) // Zeigt "Nein"-Modal
-  }
-  const handleCloseLocationInfo = () => {
-    setShowLocationInfo(false)
-  } // Schließt Zustimmungs-Modoal
-  const handleCloseDeclineModal = () => {
-    setShowDeclineModal(false)
-  } // Schließt Ablehnungs-Modal
-  return (
-    <>
-      <LocationModalLayout
-        open={showModal}
-        onConfirm={handleModalConfirm}
-        onDecline={handleModalDecline}
-      />
-      <LocationInfoModal
-        showModal={showLocationInfo}
-        location={location}
-        onClose={handleCloseLocationInfo}
-      />
-      <LocationDeclineModal
-        showModal={showLocationDecline}
-        onClose={handleCloseDeclineModal}
-      />
-      <Stack
-        direction="row"
-        justifyContent="center"
+const handleModalDecline = () => {
+  setShowModal(false) // Haupt-Modal schließen
+  setShowDeclineModal(true) // Zeigt "Nein"-Modal
+}
+
+const handleCloseLocationInfo = () => {
+  setShowLocationInfo(false)
+} // Schließt Zustimmungs-Modoal
+
+const handleCloseDeclineModal = () => {
+  setShowDeclineModal(false)
+} // Schließt Ablehnungs-Modal
+
+const AppLayout = () => (
+  <>
+    <LocationModalLayout
+      open={showModal}
+      onConfirm={handleModalConfirm}
+      onDecline={handleModalDecline}
+    />
+    <LocationInfoModal
+      showModal={showLocationInfo}
+      location={location}
+      onClose={handleCloseLocationInfo}
+    />
+    <LocationDeclineModal
+      showModal={showLocationDecline}
+      onClose={handleCloseDeclineModal}
+    />
+    <Stack
+      direction="row"
+      justifyContent="center"
+      sx={{
+        width: '100%',
+        height: '100%',
+        paddingTop: theme => theme.spacing(5),
+        paddingBottom: theme => theme.spacing(5)
+      }}
+    >
+      <Container
+        maxWidth="sm"
+        disableGutters
         sx={{
-          width: '100%',
-          height: '100%',
-          paddingTop: theme => theme.spacing(5),
-          paddingBottom: theme => theme.spacing(5)
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%'
         }}
       >
-        <Container
-          maxWidth="xs"
-          disableGutters
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          marginBottom={2}
+        >
+          <img
+            src={AppLogo}
+            alt="AppLogo"
+            style={{
+              width: '50px',
+              height: '50px',
+              marginRight: '16px'
+            }}
+          />
+          <Typography variant="h5" fontWeight="bold">
+            Notaufnahmen Berlin
+          </Typography>
+        </Stack>
+        <Paper
+          elevation={6}
           sx={{
+            flex: '1 1 auto',
             display: 'flex',
             flexDirection: 'column',
-            height: '100%'
+            paddingTop: 2,
+            paddingRight: 1,
+            paddingBottom: 2,
+            paddingLeft: 1,
+            overflow: 'hidden',
+            borderRadius: theme => theme.spacing(borderRadius),
+            background: theme => theme.palette.grey[900]
           }}
         >
           <Stack
-            direction="row"
+            flex="1 1 auto"
+            direction="column"
             justifyContent="center"
             alignItems="center"
-            marginBottom={2}
-          >
-            <img
-              src={AppLogo}
-              alt="AppLogo"
-              style={{
-                width: '50px',
-                height: '50px',
-                marginRight: '16px'
-              }}
-            />
-            <Typography variant="h5" fontWeight="bold">
-              Notaufnahmen Berlin
-            </Typography>
-          </Stack>
-          <Paper
-            elevation={6}
             sx={{
-              flex: '1 1 auto',
-              display: 'flex',
-              flexDirection: 'column',
-              paddingTop: 2,
-              paddingRight: 1,
-              paddingBottom: 2,
-              paddingLeft: 1,
               overflow: 'hidden',
               borderRadius: theme => theme.spacing(borderRadius),
-              background: theme => theme.palette.grey[900]
+              background: theme => theme.palette.background.paper
             }}
           >
             <Stack
               flex="1 1 auto"
-              direction="column"
               justifyContent="center"
               alignItems="center"
+            >
+              <Typography variant="h6">
+                hier soll eine Map sein
+              </Typography>
+            </Stack>
+            <LocationInfoModal
+              showModal={showLocationInfo}
+              location={location}
+              onClose={handleCloseLocationInfo}
+            />
+            <LocationDeclineModal
+              showModal={showLocationDecline}
+              onClose={handleCloseDeclineModal}
+            />
+            <BottomNavigation
+              showLabels
+              value={0}
               sx={{
-                overflow: 'hidden',
-                borderRadius: theme => theme.spacing(borderRadius),
-                background: theme => theme.palette.background.paper
+                borderRadius: 2
               }}
             >
-              <Stack
-                flex="1 1 auto"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Typography variant="h6">
-                  hier soll eine Map sein
-                </Typography>
-              </Stack>
-              <LocationInfoModal
-                showModal={showLocationInfo}
-                location={location}
-                onClose={handleCloseLocationInfo}
-              />
-              <LocationDeclineModal
-                showModal={showLocationDecline}
-                onClose={handleCloseDeclineModal}
-              />
               <BottomNavigation
                 showLabels
                 value={0}
-                sx={{
-                  borderRadius: 2
-                }}
+                sx={{ width: '100%' }}
               >
-                <BottomNavigation
-                  showLabels
-                  value={0}
-                  sx={{ width: '100%' }}
-                >
-                  <BottomNavigationAction
-                    label="Recents"
-                    icon={<RestoreIcon />}
-                  />
-                  <BottomNavigationAction
-                    label="Favorites"
-                    icon={<FavoriteIcon />}
-                  />
-                  <BottomNavigationAction
-                    label="Profile"
-                    icon={<ProfileIcon />}
-                  />
-                </BottomNavigation>
+                <BottomNavigationAction
+                  label="Recents"
+                  icon={<RestoreIcon />}
+                />
+                <BottomNavigationAction
+                  label="Favorites"
+                  icon={<FavoriteIcon />}
+                />
+                <BottomNavigationAction
+                  label="Profile"
+                  icon={<ProfileIcon />}
+                />
               </BottomNavigation>
-            </Stack>
-          </Paper>
-        </Container>
-      </Stack>
-    </>
-  )
-}
+            </BottomNavigation>
+          </Stack>
+        </Paper>
+      </Container>
+    </Stack>
+  </>
+)
 export default AppLayout
