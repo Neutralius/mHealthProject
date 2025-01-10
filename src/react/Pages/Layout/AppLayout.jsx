@@ -17,7 +17,7 @@ import AppLogo from '../../../assets/favicon.svg'
 import ModalLayout from './ModalLayout'
 import LandingPage from '../LandingPage/LandingPage'
 
-const borderRadius = 6
+const borderRadius = 5
 
 const AppLayout = () => {
   const [showModal, setShowModal] = useState(true)
@@ -31,11 +31,11 @@ const AppLayout = () => {
       <Stack
         direction="column"
         sx={{
-          width: '100vw',
-          height: '100vh',
+          width: '100%',
+          height: '100%',
           backgroundColor: (theme) => theme.palette.background.default,
-          overflow: 'hidden',
-          position: 'relative'
+          overflow: 'hidden'
+          // position: 'relative'
         }}
       >
         <Container
@@ -44,8 +44,8 @@ const AppLayout = () => {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            height: '75%',
-            position: 'relative'
+            height: '75%'
+            // position: 'relative'
           }}
         >
           {/* Header */}
@@ -81,8 +81,8 @@ const AppLayout = () => {
               overflow: 'hidden',
               borderRadius: theme => theme.spacing(borderRadius),
               background: theme => theme.palette.grey[900],
-              position: 'relative',
-              zIndex: 1
+              // position: 'relative',
+              // zIndex: 1
             }}
           >
             <Stack
@@ -90,8 +90,8 @@ const AppLayout = () => {
               sx={{
                 overflow: 'hidden',
                 borderRadius: theme => theme.spacing(borderRadius),
-                background: theme => theme.palette.background.paper,
-                position: 'relative'
+                background: theme => theme.palette.background.paper
+                // position: 'relative'
               }}
             >
               <LandingPage />
@@ -101,9 +101,9 @@ const AppLayout = () => {
               value={0}
               sx={{
                 backgroundColor: (theme) => theme.palette.background.paper,
-                borderRadius: 2,
-                position: 'relative',
-                zIndex: 2
+                borderRadius: 2
+                // position: 'relative',
+                // zIndex: 2
               }}
             >
               <BottomNavigationAction

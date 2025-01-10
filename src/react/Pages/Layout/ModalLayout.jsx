@@ -15,8 +15,8 @@ const Modal = ({ onConfirm }) => (
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      backdropFilter: 'blur(8px)', // Unschärfe für den Hintergrund
-      zIndex: 10 // Sicherstellen, dass das Modal im Vordergrund liegt
+      backdropFilter: 'blur(8px)' // Unschärfe für den Hintergrund
+      // zIndex: 10 // Sicherstellen, dass das Modal im Vordergrund liegt
     }}
   >
     {/* Popup */}
@@ -57,7 +57,7 @@ Modal.propTypes = {
 }
 
 const ModalLayout = ({ children, showModal, onModalConfirm }) => (
-  <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+  <div style={{ width: '100%', height: '100%' }}>
     {/* Modal wird angezeigt, falls showModal aktiv ist */}
     {showModal && <Modal onConfirm={onModalConfirm} />}
     {/* Inhalte der App */}
