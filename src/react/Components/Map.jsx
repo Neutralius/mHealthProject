@@ -108,10 +108,10 @@ const buttonStyle = {
   padding: '10px 15px',
   backgroundColor: '#007BFF',
   color: '#fff',
-  border: 'none',
+  border: '2px solid #007BFF',
   borderRadius: '5px',
   cursor: 'pointer',
-  fontSize: '14px'
+  fontSize: '12px'
 }
 
 const activeButtonStyle = {

@@ -44,7 +44,7 @@ const AppLayout = () => {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            height: '75%',
+            height: '95%',
             position: 'relative'
           }}
         >
