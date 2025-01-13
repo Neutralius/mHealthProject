@@ -5,7 +5,7 @@ import AppLayout from '../Pages/Layout/AppLayout'
 const RootRoutes = () => (
   <Router>
     <Routes>
-      {/* <Route path="/" element={<ModalLayout />} /> */}
+      {/* <Route path="/" element={<LocationModalLayout />} /> */}
       <Route path="/" element={<AppLayout />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
