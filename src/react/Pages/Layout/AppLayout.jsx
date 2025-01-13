@@ -3,64 +3,38 @@ import {
   Stack,
   Container,
   Typography,
-  Paper
+  Paper,
+  Snackbar,
+  Alert
 } from '@mui/material'
 
 import AppLogo from '../../../assets/favicon.svg'
 import LocationModalLayout from './LocationModalLayout'
-import LocationInfoModal from './LocationInfoModal'
-import LocationDeclineModal from './LocationDeclineModal'
 
 const AppLayout = () => {
   const borderRadius = 6
 
   const [showModal, setShowModal] = useState(true)
-  const [location, setLocation] = useState(null)
-  const [showLocationInfo, setShowLocationInfo] = useState(false)
-  const [showLocationDecline, setShowDeclineModal] = useState(false)
+
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'info' })
 
   const handleModalConfirm = () => {
-    const storedLocation = '52.448818, 13.386068' // Koordinaten für die Map
-    setLocation(storedLocation) // Koordinaten setzen
     setShowModal(false) // Haupt-Modal schließen
-    setShowLocationInfo(true) // Info-Modal öffnen
+    setSnackbar({ open: true, message: 'Standort erfolgreich gespeichert!', severity: 'success' })
   }
 
   const handleModalDecline = () => {
-    setShowModal(false) // Haupt-Modal schließen
-    setShowDeclineModal(true) // Nein-Modal öffnen
-  }
-
-  const handleCloseLocationInfo = () => {
-    setShowLocationInfo(false) // Zustimmungs-Modal schließen
-  }
-
-  const handleCloseDeclineModal = () => {
-    setShowDeclineModal(false) // Ablehnungs-Modal schließen
+    setShowModal(false)
+    setSnackbar({ open: true, message: 'Standortfreigabe abgelehnt!', severity: 'warning' })
   }
 
   return (
     <>
-      {/* Hauptaktions-Modal */}
       <LocationModalLayout
         open={showModal}
         onConfirm={handleModalConfirm}
         onDecline={handleModalDecline}
       />
-
-      {/* Info-Modal */}
-      <LocationInfoModal
-        showModal={showLocationInfo}
-        location={location}
-        onClose={handleCloseLocationInfo}
-      />
-
-      {/* Ablehnungs-Modal */}
-      <LocationDeclineModal
-        showModal={showLocationDecline}
-        onClose={handleCloseDeclineModal}
-      />
-
       <Stack
         direction="row"
         justifyContent="center"
@@ -80,7 +54,6 @@ const AppLayout = () => {
             height: '100%'
           }}
         >
-          {/* Header mit Logo */}
           <Stack
             direction="row"
             justifyContent="center"
@@ -100,8 +73,6 @@ const AppLayout = () => {
               Notaufnahmen Berlin
             </Typography>
           </Stack>
-
-          {/* Inhalt (z. B. eine Map später einfügen) */}
           <Paper
             elevation={6}
             sx={{
@@ -133,6 +104,16 @@ const AppLayout = () => {
           </Paper>
         </Container>
       </Stack>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={4000}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert severity={snackbar.severity} sx={{ width: '100%' }}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </>
   )
 }
