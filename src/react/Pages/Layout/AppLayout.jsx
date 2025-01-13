@@ -53,7 +53,8 @@ const AppLayout = () => {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            height: '100%'
+            height: '100%',
+            position: 'relative'
           }}
         >
           <Stack
