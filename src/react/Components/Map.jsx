@@ -4,29 +4,23 @@ import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
 import { filterLocationsByRadius } from './Distanzmesser'
 
-// Fix für fehlende Standard-Icons
+// Fix für fehlende Standard-Icons; Bilder werden bei modernen Projekten oft verschoben, daher wird der Standard-Pfad
+// gelöscht und die Marker-Icon-Suche dynamisiert
 delete L.Icon.Default.prototype._getIconUrl
 
+// stellt sicher, dass Leaflet die Marker-Icons unabhängig von der Projektstruktur lädt
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'), // für hochauflösende Bildschirme
+  iconUrl: require('leaflet/dist/images/marker-icon.png'), // Standard-Marker-Icon
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png') // Schattenbild des Markers
 })
-
-const locations = [
-  { position: [52.52474739747537, 13.44001889248633], text: 'Vivantes Klinikum im Friedrichshain' },
-  { position: [52.49418037564013, 13.40874535753571], text: 'Vivantes Klinikum am Urban' },
-  { position: [52.43847783989801, 13.458062784102816], text: 'Vivantes Klinikum Neukölln' },
-  { position: [52.46162097791152, 13.346515898211988], text: 'Vivantes Auguste-Viktoria-Klinikum' },
-  { position: [52.54979097205315, 13.205673798014406], text: 'Vivantes Klinikum Spandau' },
-  { position: [52.58987465043478, 13.309370415667551], text: 'Vivantes Humboldt-Klinikum' }
-]
 
 const MapWithMarkersAndRadius = () => {
   const [userPosition] = useState({
     position: [52.51634963490139, 13.377652149017736],
     text: 'dein Standort'
   })
+
   const [filteredLocations, setFilteredLocations] = useState([])
   const [radius, setRadius] = useState(10)
   const locations = [
