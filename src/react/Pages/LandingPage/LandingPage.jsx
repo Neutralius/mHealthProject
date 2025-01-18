@@ -1,14 +1,42 @@
 import React from 'react'
-
-import { Container } from '@mui/material'
+import { Container, Stack } from '@mui/material'
+import MapWithMarkers from '../../Components/Map'
+import DataGridDemo from '../../Components/DataGrid/DataGrid'
 
 const LandingPage = () => (
-  <Container
-    maxWidth={false}
-    disableGutters
+  <Stack
+    direction="column"
+    sx={{
+      height: '100%',
+      width: '100%'
+    }}
   >
-    Landing
-  </Container>
+    <Container
+      maxWidth={false}
+      disableGutters
+      sx={{
+        height: '70%',
+        width: '100%',
+        padding: 2,
+        position: 'relative'
+      }}
+    >
+      <MapWithMarkers />
+    </Container>
+
+    <Container
+      maxWidth={false}
+      disableGutters
+      sx={{
+        height: '30%',
+        width: '100%',
+        padding: 2,
+        position: 'relative'
+      }}
+    >
+      <DataGridDemo />
+    </Container>
+  </Stack>
 )
 
 export default LandingPage

@@ -1,13 +1,13 @@
 import React from 'react'
-
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-
-import LandingPage from '../Pages/LandingPage/LandingPage'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import AppLayout from '../Pages/Layout/AppLayout'
 
 const RootRoutes = () => (
   <Router>
     <Routes>
-      <Route path="/" element={<LandingPage />} />
+      {/* <Route path="/" element={<LocationModalLayout />} /> */}
+      <Route path="/" element={<AppLayout />} />
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   </Router>
 )
