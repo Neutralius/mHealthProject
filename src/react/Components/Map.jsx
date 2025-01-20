@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import {MapContainer, TileLayer, Marker, Popup, useMap} from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
 import { filterLocationsByRadius } from './Distanzmesser'
@@ -20,11 +20,12 @@ L.Icon.Default.mergeOptions({
 const MapWithMarkersAndRadius = () => {
     const [userPosition, setUserPosition] = useState({
         position: [52.51634963490139, 13.377652149017736],
-        text: 'dein Standort'
+        text: 'Berlin Zentrum' // Falls kein Standort freigegeben wurde!
     })
 
     const [filteredLocations, setFilteredLocations] = useState([])
     const [radius, setRadius] = useState(10)
+    const [loading, setLoading] = useState(true); // Weil sonst die Karte gebaut wird bevor der Standort erfasst wird (dadurch nicht zentriert!)
     const locations = [
             {position: [52.52474739747537, 13.44001889248633], text: 'Vivantes Klinikum im Friedrichshain'},
             {position: [52.49418037564013, 13.40874535753571], text: 'Vivantes Klinikum am Urban'},
@@ -49,7 +50,7 @@ const MapWithMarkersAndRadius = () => {
     const redMarkerIcon = L.divIcon({
         className: 'custom-marker', // Definiere CSS-Klassen
         html: '<div style="background-color:red; width:20px; height:20px; border-radius:50%;"></div>',
-        iconSize: [20, 20], // Größe des Icons
+        iconSize: [15, 15], // Größe des Icons
     });
 
 
@@ -65,7 +66,13 @@ const MapWithMarkersAndRadius = () => {
                 (position) => {
                     const {latitude, longitude} = position.coords
                     setUserPosition({position: [latitude, longitude], text: "aktuelle Position"})
-                })
+                    setLoading(false); // Standort wurde freigegeben
+                },
+                (error) => {
+                    console.error("Fehler beim Abrufen der Position: ", error);
+                    setLoading(false); // Ladezustand beenden -> keine Standort-Freigabe o. Error
+                }
+            );
         }
         }, [])
 
@@ -73,7 +80,9 @@ const MapWithMarkersAndRadius = () => {
     const handleRadiusChange = (newRadius) => {
         setRadius(newRadius)
     }
-
+    if (loading) {
+        return <div>Loading...</div>; // Ladeanzeige, wenn Position noch nicht ermittelt
+    } else {
                 return (
                     <div style={{height: '100%', width: '100%', overflow: 'hidden', zIndex: 1}}>
                         <MapContainer style={{height: '100%', width: '100%'}} center={userPosition.position} zoom={13}>
@@ -86,7 +95,7 @@ const MapWithMarkersAndRadius = () => {
                                     <Popup>{location.text}</Popup>
                                 </Marker>
                             ))}
-                            <Marker icon={redMarkerIcon} position={userPosition.position }>
+                            <Marker icon={redMarkerIcon} position={userPosition.position}>
                                 <Popup>{userPosition.text}</Popup>
                             </Marker>
                         </MapContainer>
@@ -113,6 +122,7 @@ const MapWithMarkersAndRadius = () => {
                     </div>
                 )
             }
+}
 
             // CSS-Stile für die Buttons
             const buttonContainerStyle = {
