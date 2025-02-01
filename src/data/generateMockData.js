@@ -5,17 +5,15 @@
 import formatWartezeit from './formatWartezeit'
 import listeKrankenhaeuser from './listeKrankenhaeuser'
 
-const generateMockData = () =>
 // Quelle: https://react.dev/learn/rendering-lists
-
-  listeKrankenhaeuser
-    .map((krankenhaus) => {
-      const wartezeit = Math.floor(Math.random() * 180 + 20)
-      return {
-        ...krankenhaus,
-        Patienten: Math.floor(Math.random() * 30 + 10),
-        Wartezeit: formatWartezeit(wartezeit)
-      }
-    })
+const generateMockData = () => listeKrankenhaeuser
+  .map((krankenhaus) => {
+    const wartezeit = Math.floor(Math.random() * 180 + 20)
+    return {
+      ...krankenhaus,
+      Patienten: Math.floor(Math.random() * 30 + 10),
+      Wartezeit: formatWartezeit(wartezeit)
+    }
+  })
 
 export default generateMockData
