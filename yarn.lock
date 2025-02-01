@@ -6589,6 +6589,7 @@ __metadata:
     imagemin-svgo: "npm:^10.0.1"
     imagemin-webp: "npm:^8.0.0"
     leaflet: "npm:^1.9.4"
+    leaflet.awesome-markers: "npm:^2.0.5"
     local-web-server: "npm:^5.4.0"
     lodash: "npm:4.17.21"
     luxon: "npm:^3.3.0"
@@ -7795,6 +7796,13 @@ __metadata:
   dependencies:
     language-subtag-registry: "npm:^0.3.20"
   checksum: 10c0/9ab911213c4bd8bd583c850201c17794e52cb0660d1ab6e32558aadc8324abebf6844e46f92b80a5d600d0fbba7eface2c207bfaf270a1c7fd539e4c3a880bff
+  languageName: node
+  linkType: hard
+
+"leaflet.awesome-markers@npm:^2.0.5":
+  version: 2.0.5
+  resolution: "leaflet.awesome-markers@npm:2.0.5"
+  checksum: 10c0/d9a35ae86615ff0de587bc0ba8b1edfa9381744f5b5218e92d973e6fc35ff80384d091d6da115067dfe26de9dcb938a5d1337edc0eb4f9b5bb543dd0125406a7
   languageName: node
   linkType: hard
 

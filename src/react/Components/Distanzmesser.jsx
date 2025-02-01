@@ -1,3 +1,4 @@
+// Haversine-Formel um Entfernung zwischen zwei Punkten auf der Erde anhand Koordinaten zu berechnen
 export const calculateDistance = (lat1, lon1, lat2, lon2) => {
   const toRad = (value) => (value * Math.PI) / 180 // Grad in Radianten umrechnen
   const R = 6371 // Erdhalbmesser in Kilometern
