@@ -1,12 +1,8 @@
 import 'leaflet/dist/leaflet.css'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-
 import { CssBaseline } from '@mui/material'
-
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-
-import AppLayout from './Pages/Layout/AppLayout'
 import RootRoutes from './Routes/RootRoutes'
 
 const theme = createTheme({
@@ -36,10 +32,9 @@ const root = createRoot(container)
 root.render(
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    <AppLayout />
+    <RootRoutes />
   </ThemeProvider>
 )
 
-const App = () => <RootRoutes />
-
-export default App
+/* const App = () => <RootRoutes />
+export default App */
