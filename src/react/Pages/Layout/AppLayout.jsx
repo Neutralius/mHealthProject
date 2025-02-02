@@ -10,8 +10,8 @@ import {
 
 import AppLogo from '../../../assets/favicon.svg'
 import LocationModalLayout from './LocationModalLayout'
-import MapWithMarkers from '../../Components/Map.jsx'
-import DataGridDemo from '../../Components/DataGrid/DataGrid.jsx'
+import MapWithMarkers from '../../Components/Map'
+import DataGridDemo from '../../Components/DataGrid/DataGrid'
 
 const AppLayout = () => {
   const borderRadius = 6
@@ -75,6 +75,18 @@ const AppLayout = () => {
             <Typography variant="h5" fontWeight="bold">
               Notaufnahmen Berlin
             </Typography>
+            <a
+              href="/alternatives"
+              style={{
+                textDecoration: 'none',
+                marginLeft: '16px',
+                color: 'blue',
+                padding: '8px 16px',
+                backgroundColor: 'yellow'
+              }}
+            >
+              TEST ALTERNATIVES
+            </a>
           </Stack>
           <Paper
             elevation={6}
