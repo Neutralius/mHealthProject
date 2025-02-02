@@ -31,28 +31,28 @@ const LocationModalLayout = ({ open, onConfirm, onDecline }) => {
   const geolocate = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const { latitude, longitude } = position.coords
+        (position) => {
+          const { latitude, longitude } = position.coords
 
-            const location = { lat: latitude, lon: longitude }
-            saveLocationToSessionStorage(location)
-            savePermissionToSessionStorage(true)
-            setSnackbar({
-              open: true,
-              message: 'Standort erfolgreich gespeichert!',
-              severity: 'success'
-            })
-            onConfirm(location)
-          },
-          (error) => {
-            const errorMessage = ERROR_MESSAGES[error.code] || ERROR_MESSAGES.UNSUPPORTED
-            setSnackbar({
-              open: true,
-              message: errorMessage,
-              severity: 'error'
-            })
-          },
-          GEOLOCATION_OPTIONS
+          const location = { lat: latitude, lon: longitude }
+          saveLocationToSessionStorage(location)
+          savePermissionToSessionStorage(true)
+          setSnackbar({
+            open: true,
+            message: 'Standort erfolgreich gespeichert!',
+            severity: 'success'
+          })
+          onConfirm(location)
+        },
+        (error) => {
+          const errorMessage = ERROR_MESSAGES[error.code] || ERROR_MESSAGES.UNSUPPORTED
+          setSnackbar({
+            open: true,
+            message: errorMessage,
+            severity: 'error'
+          })
+        },
+        GEOLOCATION_OPTIONS
       )
     } else {
       setSnackbar({
@@ -94,34 +94,34 @@ const LocationModalLayout = ({ open, onConfirm, onDecline }) => {
   if (storedPermission) return null
 
   return (
-      <>
-        <ModalBase open={open} onClose={declinePermission}>
-          <Typography variant="h6" sx={{ marginBottom: 2 }}>
-            Standort freigeben
-          </Typography>
-          <Typography variant="body1" sx={{ marginBottom: 3 }}>
-            Möchten Sie Ihren Standort freigeben?
-          </Typography>
-          <Stack direction="row" justifyContent="center" spacing={2}>
-            <Button variant="text" color="success" onClick={geolocate}>
-              Ja
-            </Button>
-            <Button variant="text" color="error" onClick={declinePermission}>
-              Nein
-            </Button>
-          </Stack>
-        </ModalBase>
-        <Snackbar
-            open={snackbar.open}
-            autoHideDuration={4000}
-            onClose={closeSnackbar}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        >
-          <Alert onClose={closeSnackbar} severity={snackbar.severity} sx={{ width: '100%' }}>
-            {snackbar.message}
-          </Alert>
-        </Snackbar>
-      </>
+    <>
+      <ModalBase open={open} onClose={declinePermission}>
+        <Typography variant="h6" sx={{ marginBottom: 2 }}>
+          Standort freigeben
+        </Typography>
+        <Typography variant="body1" sx={{ marginBottom: 3 }}>
+          Möchten Sie Ihren Standort freigeben?
+        </Typography>
+        <Stack direction="row" justifyContent="center" spacing={2}>
+          <Button variant="text" color="success" onClick={geolocate}>
+            Ja
+          </Button>
+          <Button variant="text" color="error" onClick={declinePermission}>
+            Nein
+          </Button>
+        </Stack>
+      </ModalBase>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={4000}
+        onClose={closeSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert onClose={closeSnackbar} severity={snackbar.severity} sx={{ width: '100%' }}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+    </>
   )
 }
 
