@@ -1,19 +1,23 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   Stack,
   Container,
   Typography,
   Paper,
   Snackbar,
-  Alert
+  Alert,
+  IconButton
 } from '@mui/material'
-
+import Brightness4Icon from '@mui/icons-material/Brightness4'
+import Brightness7Icon from '@mui/icons-material/Brightness7'
+import PropTypes from 'prop-types'
 import AppLogo from '../../../assets/favicon.svg'
 import LocationModalLayout from './LocationModalLayout'
 import MapWithMarkers from '../../Components/Map'
 import DataGridDemo from '../../Components/DataGrid/DataGrid'
 
-const AppLayout = () => {
+const AppLayout = ({ darkMode, setDarkMode }) => {
   const borderRadius = 6
 
   const [showModal, setShowModal] = useState(true)
@@ -75,8 +79,15 @@ const AppLayout = () => {
             <Typography variant="h5" fontWeight="bold">
               Notaufnahmen Berlin
             </Typography>
-            <a
-              href="/alternatives"
+            <IconButton
+              sx={{ ml: 1 }}
+              onClick={() => setDarkMode(!darkMode)}
+              color="inherit"
+            >
+              {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
+            <Link
+              to="/alternatives"
               style={{
                 textDecoration: 'none',
                 marginLeft: '16px',
@@ -86,7 +97,7 @@ const AppLayout = () => {
               }}
             >
               TEST ALTERNATIVES
-            </a>
+            </Link>
           </Stack>
           <Paper
             elevation={6}
@@ -155,6 +166,11 @@ const AppLayout = () => {
       </Snackbar>
     </>
   )
+}
+
+AppLayout.propTypes = {
+  darkMode: PropTypes.bool.isRequired,
+  setDarkMode: PropTypes.func.isRequired
 }
 
 export default AppLayout
