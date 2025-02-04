@@ -6,7 +6,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import generateMockData from '../../../data/generateMockData'
 
 const columns = [
-  /*{
+  /* {
     field: 'id',
     headerName: 'ID',
     width: 90
@@ -30,7 +30,7 @@ const columns = [
   }
 ]
 
-export default () => {
+const KrankenhausListe = () => {
   const rows = generateMockData()
 
   return (
@@ -52,3 +52,5 @@ export default () => {
     </Box>
   )
 }
+
+export default KrankenhausListe
