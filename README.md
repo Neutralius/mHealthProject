@@ -1,14 +1,36 @@
-WiSe 2024/2025 Projekt mHealth
-Thema: Notaufnahme Berlin
+## mHealth WiSe 24/25
+### Entwicklung einer Anwendung, die Notaufnahmen mit voraussichtlicher Wartezeit in Berlin anzeigt
 
-Link zum Miro Board: https://miro.com/app/board/uXjVLKqcqkE=/
+**Value Proposition**: Wir helfen Personen ohne akuten Notfall, die am wenigsten belegten Notaufnahmen in ihrer Umgebung und Alternativen zu finden, um zur Entlastung des Gesundheitssystems beizutragen – schnell, übersichtlich und ohne Anmeldung.
+#### Installation und Setup 
+1. Repository clonen:
+```bash
+git clone https://github.com/Neutralius/mHealthProject.git
+cd mHealthProject
+```
+#### Starten der Anwendung
+```bash
+yarn install
+```
+in Terminal 1:
+```bash
+yarn watch
+```
+in Terminal 2:
+```bash
+yarn start:dev
+```
 
-Material UI Library (baut React components und folgt Googles Design Prinzipien): https://mui.com/material-ui/getting-started/
+#### verwendete Technologien:
+- React
+- Yarn
+- JavaScript 
 
-M2 (für Icons etc.): https://m2.material.io
+#### verwendetet Tools:
+- Material UI Library : https://mui.com/material-ui/getting-started/
+- M2 (für Icons etc.): https://m2.material.io
+- Entwicklungsumgebung: WebStorm IDE
 
-
-"Wir helfen erwachsenen Personen die planen sich zu einer Notaufnahme zu begeben wenig belegte Notaufnahmen zu finden indem wir eine einfache, vollständige, standortabhängige Übersicht über Wartezeiten und Alternativen (Bereitschaftspraxen) anbieten, ohne vorher einen Account erstellen zu müssen."
-
-Quellen:
-- https://github.com/robert-koch-institut/Daten_der_Notaufnahmesurveillance
+#### weitere Materialien des Projekts:
+- Link zum Miro Board: https://miro.com/app/board/uXjVLKqcqkE=/
+- Link zur Präsentation: https://docs.google.com/presentation/d/1j9evZUjykBF18ESgyWAE6gwApd4q5USbdUL9pOFkOVc/edit#slide=id.g4dfce81f19_0_45
