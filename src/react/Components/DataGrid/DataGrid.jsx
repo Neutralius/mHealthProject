@@ -6,7 +6,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import generateMockData from '../../../data/generateMockData'
 
 const columns = [
-  /* {
+  /*{
     field: 'id',
     headerName: 'ID',
     width: 90
@@ -41,11 +41,11 @@ export default () => {
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 10
+              pageSize: 18
             }
           }
         }}
-        pageSizeOptions={[10]}
+        pageSizeOptions={[18]}
         // checkboxSelection
         disableRowSelectionOnClick
       />
