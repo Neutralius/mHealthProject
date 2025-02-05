@@ -10,8 +10,8 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import PropTypes from 'prop-types';
 import AppLogo from '../../../assets/favicon.svg';
-import medAlternativesData from './medAlternativesData';
-import MedAlternativesCard from '../../Components/MedAlternatives/MedAlternativesCard';
+import medAlternativesData from './medAlternativesData.js';
+import MedAlternativesCard from '../../Components/MedAlternatives/MedAlternativesCard.jsx';
 
 const AlternativesPage = ({ darkMode, setDarkMode }) => {
     const borderRadius = 6;
@@ -37,7 +37,6 @@ const AlternativesPage = ({ darkMode, setDarkMode }) => {
                     position: 'relative',
                 }}
             >
-                {/* Header */}
                 <Stack
                     direction="row"
                     justifyContent="center"
@@ -64,8 +63,6 @@ const AlternativesPage = ({ darkMode, setDarkMode }) => {
                         {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
                     </IconButton>
                 </Stack>
-
-                {/* Content */}
                 <Paper
                     elevation={6}
                     sx={{

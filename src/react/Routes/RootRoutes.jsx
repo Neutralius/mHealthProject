@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import AppLayout from '../Pages/Layout/AppLayout'
-import AlternativesPage from '../Pages/AlternativesPage/AlternativesPage'
+import AlternativesPage from '../Pages/AlternativesPage/AlternativesPage.jsx'
 
 const RootRoutes = ({ darkMode, setDarkMode }) => (
   <Router>

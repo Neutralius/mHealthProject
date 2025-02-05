@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
@@ -6,8 +7,9 @@ import { filterLocationsByRadius } from './Distanzmesser'
 import 'leaflet.awesome-markers/dist/leaflet.awesome-markers.css'
 import 'leaflet.awesome-markers/dist/leaflet.awesome-markers.js'
 import listeKrankenhaeuser from '../../data/listeKrankenhaeuser.js'
-import { Link } from '@mui/material'
+import {Link} from '@mui/material'
 import PhoneIcon from '@mui/icons-material/Phone'
+import EmergencyIcon from '@mui/icons-material/Emergency';
 
 // Fix für fehlende Standard-Icons; Bilder werden bei modernen Projekten oft verschoben, daher wird der Standard-Pfad
 // gelöscht und die Marker-Icon-Suche dynamisiert
@@ -26,6 +28,8 @@ const MapWithMarkersAndRadius = () => {
     text: 'Berlin Zentrum' // Falls kein Standort freigegeben wurde!
   })
 
+
+
   const [filteredLocations, setFilteredLocations] = useState([])
   const [radius, setRadius] = useState(10)
   const [loading, setLoading] = useState(true) // Weil sonst die Karte gebaut wird bevor der Standort erfasst wird (dadurch nicht zentriert!)
@@ -35,6 +39,8 @@ const MapWithMarkersAndRadius = () => {
     html: '<div style="background-color:red; width:20px; height:20px; border-radius:50%;"></div>',
     iconSize: [15, 15] // Größe des Icons
   })
+
+  const navigate = useNavigate();
 
   // Filtere die Locations basierend auf dem Radius
   useEffect(() => {
@@ -87,6 +93,27 @@ const MapWithMarkersAndRadius = () => {
                 <PhoneIcon sx={{ mr: 1 }} />
                 {location.tele}
               </Link>
+              <Link
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault(); // Verhindert die Standard-Aktion des Links
+                    navigate('/alternatives'); // Navigiert zur Alternativen-Seite
+                  }}
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    textDecoration: 'none',
+                    color: '#007BFF',
+                    fontWeight: 'normal',
+                    '&:hover': {
+                      textDecoration: 'underline', // Textdekoration bei Hover
+                    },
+                  }}
+              >
+                <EmergencyIcon sx={{ mr: 1 }} />
+                Alternativen
+              </Link>
+
             </Popup>
           </Marker>
         ))}
