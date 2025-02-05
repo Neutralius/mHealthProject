@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import {
   Stack,
   Container,
@@ -86,18 +85,6 @@ const AppLayout = ({ darkMode, setDarkMode }) => {
             >
               {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>
-            <Link
-              to="/alternatives"
-              style={{
-                textDecoration: 'none',
-                marginLeft: '16px',
-                color: 'blue',
-                padding: '8px 16px',
-                backgroundColor: 'yellow'
-              }}
-            >
-              TEST ALTERNATIVES
-            </Link>
           </Stack>
           <Paper
             elevation={6}
