@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { CssBaseline } from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { LocationProvider } from './Contexts/LocationContext'
 import RootRoutes from './Routes/RootRoutes'
 
 const App = () => {
@@ -36,7 +37,9 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <RootRoutes darkMode={darkMode} setDarkMode={setDarkMode} />
+      <LocationProvider>
+        <RootRoutes darkMode={darkMode} setDarkMode={setDarkMode} />
+      </LocationProvider>
     </ThemeProvider>
   )
 }
