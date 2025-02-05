@@ -4,6 +4,7 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import { DataGrid } from '@mui/x-data-grid'
 import generateMockData from '../../../data/generateMockData'
+import { useLocation } from '../../Contexts/LocationContext'
 
 const columns = [
   /* {
@@ -20,7 +21,8 @@ const columns = [
   {
     field: 'Patienten',
     headerName: 'wartende Patienten',
-    width: 90
+    width: 90,
+    sortable: true
   },
   {
     field: 'Wartezeit',
@@ -31,8 +33,8 @@ const columns = [
 ]
 
 const KrankenhausListe = () => {
-  const rows = generateMockData()
-
+  const { filteredLocations } = useLocation()
+  const rows = generateMockData(filteredLocations)
 
   return (
     <Box sx={{ height: 400, width: '100%' }}>
@@ -40,6 +42,12 @@ const KrankenhausListe = () => {
         rows={rows}
         columns={columns}
         initialState={{
+          sorting: {
+            sortModel: [{
+              field: 'Wartezeit',
+              sort: 'asc'
+            }]
+          },
           pagination: {
             paginationModel: {
               pageSize: 18
@@ -49,6 +57,7 @@ const KrankenhausListe = () => {
         pageSizeOptions={[18]}
         // checkboxSelection
         disableRowSelectionOnClick
+        getRowId={(row) => row.Name}
       />
     </Box>
   )
