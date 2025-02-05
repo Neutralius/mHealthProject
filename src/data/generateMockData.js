@@ -1,3 +1,4 @@
+/*
 // Mock Data für Visualisierungen bis wir real data haben
 // Liste mit Berliner Krankenhäusern
 // Quelle: https://medium.com/@biplavmazumdar5/mocking-data-in-react-js-or-javascript-3f278ba7f550
@@ -15,5 +16,14 @@ const generateMockData = () => listeKrankenhaeuser
       Wartezeit: formatWartezeit(wartezeit)
     }
   })
+
+export default generateMockData
+*/
+const generateMockData = (locations = []) => locations.map(location => ({
+  ...location,
+  Patienten: Math.floor(Math.random() * 30 + 10),
+  Wartezeit: Math.floor(Math.random() * 180 + 20),
+  id: location.Name
+}))
 
 export default generateMockData
