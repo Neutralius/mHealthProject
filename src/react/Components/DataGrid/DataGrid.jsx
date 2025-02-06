@@ -4,6 +4,10 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import { DataGrid } from '@mui/x-data-grid'
 import generateMockData from '../../../data/generateMockData'
+import HospitalModal from "../../Pages/Layout/HospitalModalLayout.jsx";
+import {useState} from "react";
+
+
 
 const columns = [
   /* {
@@ -33,25 +37,47 @@ const columns = [
 const KrankenhausListe = () => {
   const rows = generateMockData()
 
+  const [selectedHospital, setSelectedHospital] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleRowClick = (params) => {
+    setSelectedHospital(params.row); // Speichere die angeklickte Zeile
+    setIsModalOpen(true); // Öffne das Modal
+  };
+
+  const handleClose = () => {
+    setIsModalOpen(false); // Schließe das Modal
+    setSelectedHospital(null); // Zurücksetzen
+  };
+
 
   return (
-    <Box sx={{ height: 400, width: '100%' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 18
-            }
-          }
-        }}
-        pageSizeOptions={[18]}
-        // checkboxSelection
-        disableRowSelectionOnClick
-      />
-    </Box>
+      <>
+        <Box sx={{height: 400, width: '100%'}}>
+          <DataGrid
+              rows={rows}
+              columns={columns}
+              onRowClick={handleRowClick}
+              initialState={{
+                pagination: {
+                  paginationModel: {
+                    pageSize: 18
+                  }
+                }
+              }}
+              pageSizeOptions={[18]}
+              // checkboxSelection
+              disableRowSelectionOnClick
+          />
+        </Box>
+        <HospitalModal
+            open={isModalOpen}
+            onClose={handleClose}
+            hospital={selectedHospital}
+        />
+      </>
   )
+
 }
 
 export default KrankenhausListe

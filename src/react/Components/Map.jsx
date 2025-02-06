@@ -9,7 +9,6 @@ import 'leaflet.awesome-markers/dist/leaflet.awesome-markers.js'
 import listeKrankenhaeuser from '../../data/listeKrankenhaeuser.js'
 import {Link} from '@mui/material'
 import PhoneIcon from '@mui/icons-material/Phone'
-import EmergencyIcon from '@mui/icons-material/Emergency';
 
 // Fix für fehlende Standard-Icons; Bilder werden bei modernen Projekten oft verschoben, daher wird der Standard-Pfad
 // gelöscht und die Marker-Icon-Suche dynamisiert
@@ -39,10 +38,8 @@ const MapWithMarkersAndRadius = () => {
     html: '<div style="background-color:red; width:20px; height:20px; border-radius:50%;"></div>',
     iconSize: [15, 15] // Größe des Icons
   })
-
-  const navigate = useNavigate();
-
-  // Filtere die Locations basierend auf dem Radius
+  useNavigate();
+// Filtere die Locations basierend auf dem Radius
   useEffect(() => {
     const filtered = filterLocationsByRadius(userPosition.position, listeKrankenhaeuser, radius)
     setFilteredLocations(filtered)
@@ -94,27 +91,6 @@ const MapWithMarkersAndRadius = () => {
                 <PhoneIcon sx={{ mr: 1 }} />
                 {location.tele}
               </Link>
-              <Link
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault(); // Verhindert die Standard-Aktion des Links
-                    navigate('/alternatives'); // Navigiert zur Alternativen-Seite
-                  }}
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    textDecoration: 'none',
-                    color: '#007BFF',
-                    fontWeight: 'normal',
-                    '&:hover': {
-                      textDecoration: 'underline', // Textdekoration bei Hover
-                    },
-                  }}
-              >
-                <EmergencyIcon sx={{ mr: 1 }} />
-                Alternativen
-              </Link>
-
             </Popup>
           </Marker>
         ))}
