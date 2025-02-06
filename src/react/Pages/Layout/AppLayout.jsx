@@ -1,11 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Stack,
   Container,
   Typography,
   Paper,
-  Snackbar,
-  Alert,
   IconButton
 } from '@mui/material'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
@@ -15,16 +13,13 @@ import AppLogo from '../../../assets/favicon.svg'
 import LocationManager from './LocationModalLayout'
 import MapWithMarkers from '../../Components/Map'
 import DataGridDemo from '../../Components/DataGrid/DataGrid'
-import {getLocationFromSessionStorage} from "../../../utils/SessionStorageUtils.jsx";
 
 const AppLayout = ({ darkMode, setDarkMode }) => {
   const borderRadius = 6
 
-    const [setLocation] = useState(getLocationFromSessionStorage())
-    const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'info' })
     return (
         <>
-      <LocationManager onLocationUpdate={setLocation} />
+      <LocationManager/>
       <Stack
         direction="row"
         justifyContent="center"
@@ -124,18 +119,7 @@ const AppLayout = ({ darkMode, setDarkMode }) => {
             </Stack>
           </Paper>
         </Container>
-
       </Stack>
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={4000}
-        onClose={() => setSnackbar({ ...snackbar, open: false })}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Alert severity={snackbar.severity} sx={{ width: '100%' }}>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
     </>
   )
 }
