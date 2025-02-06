@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Typography, Stack, Snackbar, Alert } from '@mui/material'
-import ModalBase from '../../Components/ModalBase'
+import { Snackbar, Alert } from '@mui/material'
 import {
   saveLocationToSessionStorage,
   savePermissionToSessionStorage,
-  getPermissionFromSessionStorage, removeLocationFromSessionStorage, removePermissionFromSessionStorage
-
-} from '../../../utils/SessionStorageUtils'
+  getPermissionFromSessionStorage,
+  removeLocationFromSessionStorage,
+  removePermissionFromSessionStorage
+} from '../../../Utils/SessionStorageUtils'
 
 const GEOLOCATION_OPTIONS = {
   enableHighAccuracy: true,
@@ -16,119 +16,89 @@ const GEOLOCATION_OPTIONS = {
 }
 
 const ERROR_MESSAGES = {
-  POSITION_UNAVAILABLE: 'Standortinformationen sind nicht verfügbar.',
-  TIMEOUT: 'Die Standortabfrage ist abgelaufen.',
+  1: 'Standortzugriff wurde verweigert. Bitte ändern Sie die Browser-Einstellungen.',
+  2: 'Standortinformationen sind nicht verfügbar.',
+  3: 'Die Standortabfrage ist abgelaufen.',
   DEFAULT: 'Ein unbekannter Fehler ist aufgetreten.',
-  UNSUPPORTED: 'Bitte geben Sie Ihren Standort zuerst in den Einstellungen des Browsers frei.'
 }
 
-const LocationModalLayout = ({ open, onConfirm, onDecline }) => {
-  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'error' })
-  const [storedPermission, setStoredPermission] = useState(false)
+const LocationManager = ({ onLocationUpdate }) => {
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'info' })
 
   const closeSnackbar = () => setSnackbar({ ...snackbar, open: false })
 
-  const geolocate = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
+  const requestLocation = () => {
+    if (!navigator.geolocation) {
+      setSnackbar({ open: true, message: ERROR_MESSAGES.DEFAULT, severity: 'error' })
+      return
+    }
+
+    navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+      if (result.state === 'granted') {
+        getLocation(true) // Standort holen & speichern
+      } else if (result.state === 'prompt') {
+        getLocation(false) // Nutzer entscheidet noch → keine Speicherung
+      } else {
+        handleLocationDenied()
+      }
+    })
+  }
+
+  const getLocation = (saveToStorage) => {
+    navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords
-
           const location = { lat: latitude, lon: longitude }
-          saveLocationToSessionStorage(location)
-          savePermissionToSessionStorage(true)
-          setSnackbar({
-            open: true,
-            message: 'Standort erfolgreich gespeichert!',
-            severity: 'success'
-          })
-          onConfirm(location)
+
+          if (saveToStorage) {
+            saveLocationToSessionStorage(location)
+            savePermissionToSessionStorage(true)
+          }
+
+          setSnackbar({ open: true, message: 'Standort erfolgreich abgerufen!', severity: 'success' })
+          onLocationUpdate(location) // Standort an die App weitergeben
         },
         (error) => {
-          const errorMessage = ERROR_MESSAGES[error.code] || ERROR_MESSAGES.UNSUPPORTED
-          setSnackbar({
-            open: true,
-            message: errorMessage,
-            severity: 'error'
-          })
+          setSnackbar({ open: true, message: ERROR_MESSAGES[error.code] || ERROR_MESSAGES.DEFAULT, severity: 'error' })
+          handleLocationDenied()
         },
         GEOLOCATION_OPTIONS
-      )
-    } else {
-      setSnackbar({
-        open: true,
-        message: ERROR_MESSAGES.UNSUPPORTED,
-        severity: 'error'
-      })
-    }
+    )
+  }
+
+  const handleLocationDenied = () => {
+    removeLocationFromSessionStorage()
+    removePermissionFromSessionStorage()
+    setSnackbar({ open: true, message: 'Standortzugriff verweigert. Daten wurden entfernt.', severity: 'warning' })
+    onLocationUpdate(null) // Leere Location zurückgeben
   }
 
   useEffect(() => {
-    const permissionGranted = getPermissionFromSessionStorage() === true
-    setStoredPermission(permissionGranted)
-    if (permissionGranted && open) {
-      geolocate()
-    } else if (open) {
-      setSnackbar({
-        open: true,
-        message: 'Bitte geben Sie die Standortfreigabe in den Browser-Einstellungen an.',
-        severity: 'info'
-      })
+    const storedPermission = getPermissionFromSessionStorage()
+
+    if (storedPermission) {
+      requestLocation()
     }
-  }, [open])
-
-  // löscht Zustimmung - wichtig falls User im Browser nur einmalige Zustimmung gegeben hat
-  const declinePermission = () => {
-    removeLocationFromSessionStorage()
-    removePermissionFromSessionStorage()
-
-    // Setze den Status auf abgelehnt und rufe den `onDecline`-Callback auf
-    setSnackbar({
-      open: true,
-      message: 'Standortfreigabe abgelehnt.',
-      severity: 'warning'
-    })
-    onDecline()
-  }
-
-  if (storedPermission) return null
+  }, [])
 
   return (
-    <>
-      <ModalBase open={open} onClose={declinePermission}>
-        <Typography variant="h6" sx={{ marginBottom: 2 }}>
-          Standort freigeben
-        </Typography>
-        <Typography variant="body1" sx={{ marginBottom: 3 }}>
-          Möchten Sie Ihren Standort freigeben?
-        </Typography>
-        <Stack direction="row" justifyContent="center" spacing={2}>
-          <Button variant="text" color="success" onClick={geolocate}>
-            Ja
-          </Button>
-          <Button variant="text" color="error" onClick={declinePermission}>
-            Nein
-          </Button>
-        </Stack>
-      </ModalBase>
       <Snackbar
-        open={snackbar.open}
-        autoHideDuration={4000}
-        onClose={closeSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          open={snackbar.open}
+          autoHideDuration={4000}
+          onClose={closeSnackbar}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
         <Alert onClose={closeSnackbar} severity={snackbar.severity} sx={{ width: '100%' }}>
           {snackbar.message}
         </Alert>
       </Snackbar>
-    </>
   )
 }
 
-LocationModalLayout.propTypes = {
-  open: PropTypes.bool.isRequired,
-  onConfirm: PropTypes.func.isRequired,
-  onDecline: PropTypes.func.isRequired
+LocationManager.propTypes = {
+  onLocationUpdate: PropTypes.func.isRequired
 }
 
-export default LocationModalLayout
+export default LocationManager
+
+

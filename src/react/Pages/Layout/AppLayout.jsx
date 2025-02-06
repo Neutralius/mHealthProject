@@ -12,34 +12,19 @@ import Brightness4Icon from '@mui/icons-material/Brightness4'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import PropTypes from 'prop-types'
 import AppLogo from '../../../assets/favicon.svg'
-import LocationModalLayout from './LocationModalLayout'
+import LocationManager from './LocationModalLayout'
 import MapWithMarkers from '../../Components/Map'
 import DataGridDemo from '../../Components/DataGrid/DataGrid'
+import {getLocationFromSessionStorage} from "../../../utils/SessionStorageUtils.jsx";
 
 const AppLayout = ({ darkMode, setDarkMode }) => {
   const borderRadius = 6
 
-  const [showModal, setShowModal] = useState(true)
-
-  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'info' })
-
-  const handleModalConfirm = () => {
-    setShowModal(false) // Haupt-Modal schließen
-    setSnackbar({ open: true, message: 'Standort erfolgreich gespeichert!', severity: 'success' })
-  }
-
-  const handleModalDecline = () => {
-    setShowModal(false)
-    setSnackbar({ open: true, message: 'Standortfreigabe abgelehnt!', severity: 'warning' })
-  }
-
-  return (
-    <>
-      <LocationModalLayout
-        open={showModal}
-        onConfirm={handleModalConfirm}
-        onDecline={handleModalDecline}
-      />
+    const [setLocation] = useState(getLocationFromSessionStorage())
+    const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'info' })
+    return (
+        <>
+      <LocationManager onLocationUpdate={setLocation} />
       <Stack
         direction="row"
         justifyContent="center"
