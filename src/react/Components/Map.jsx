@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
-import { filterLocationsByRadius } from './Distanzmesser'
+import {calculateDistance, filterLocationsByRadius} from './Distanzmesser'
 import 'leaflet.awesome-markers/dist/leaflet.awesome-markers.css'
 import 'leaflet.awesome-markers/dist/leaflet.awesome-markers.js'
 import listeKrankenhaeuser from '../../data/listeKrankenhaeuser.js'
@@ -81,13 +81,14 @@ const MapWithMarkersAndRadius = () => {
         {filteredLocations.map((location, index) => (
           <Marker key={index} position={location.position}>
             <Popup>
-              <p>
-                Name:
-                {location.Name}
+              <p  style={{ margin: '3px 0' }}>
+                <strong>Name:</strong> {location.Name}
               </p>
-              <p>
-                Adresse:
-                {location.address}
+              <p style={{ margin: '3px 0' }}>
+                <strong>Adresse:</strong> {location.address}
+              </p>
+              <p style={{ margin: '3px 0' }}>
+                <strong>Entfernung:</strong> {calculateDistance(userPosition.position[0], userPosition.position[1], location.position[0],location.position[1]).toFixed(2)}km
               </p>
               <Link href={`anrufen: ${location.tele}`}>
                 <PhoneIcon sx={{ mr: 1 }} />
