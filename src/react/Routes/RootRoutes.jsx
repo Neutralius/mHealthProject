@@ -9,7 +9,7 @@ const RootRoutes = ({ darkMode, setDarkMode }) => (
     <Routes>
       {/* <Route path="/" element={<LocationModalLayout />} /> */}
       <Route path="/" element={<AppLayout darkMode={darkMode} setDarkMode={setDarkMode} />} />
-      <Route path="/alternatives" element={<AlternativesPage darkMode={darkMode} />} />
+      <Route path="/alternatives" element={<AlternativesPage darkMode={darkMode}  setDarkMode={setDarkMode}/>} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   </Router>
