@@ -71,6 +71,7 @@ const HospitalModal = ({ open, onClose, hospital }) => {
           <strong>Aktuelle Wartezeit:</strong>
           {' '}
           {hospital.Wartezeit}
+            {' Min.'}
         </Typography>
         <Button
           onClick={handleNavigateToAlternatives} // Navigiere zur Alternativ-Seite
