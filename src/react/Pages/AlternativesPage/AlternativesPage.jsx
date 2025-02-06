@@ -4,16 +4,18 @@ import {
   Container,
   Typography,
   Paper,
-  IconButton
+  IconButton, Button
 } from '@mui/material'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import PropTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom'
 import AppLogo from '../../../assets/favicon.svg'
 import medAlternativesData from './medAlternativesData'
 import MedAlternativesCard from '../../Components/MedAlternatives/MedAlternativesCard'
 
 const AlternativesPage = ({ darkMode, setDarkMode }) => {
+  const navigate = useNavigate()
   const borderRadius = 6
 
   return (
@@ -53,7 +55,7 @@ const AlternativesPage = ({ darkMode, setDarkMode }) => {
             }}
           />
           <Typography variant="h5" fontWeight="bold">
-            Alternative Krankenhäuser
+            Alternative Anlaufstellen
           </Typography>
           <IconButton
             sx={{ ml: 1 }}
@@ -108,9 +110,32 @@ const AlternativesPage = ({ darkMode, setDarkMode }) => {
                   website={medInfo.website}
                   erreichbarkeit={medInfo.erreichbarkeit}
                 />
+
               ))}
             </Container>
           </Stack>
+          <Button
+            variant="contained"
+            sx={{
+              position: 'absolute', // Fixierte Position innerhalb des Containers
+              bottom: '40px', // Weiter nach oben verschoben
+              left: '20px', // Auf die linke Seite verschoben
+              minWidth: '120px', // Schmaler Button
+              padding: '6px 12px', // Kompakte Größe
+              backgroundColor: '#007BFF', // Blaue Primärfarbe
+              color: '#fff',
+              borderRadius: '8px', // Abgerundete Ecken
+              fontSize: '0.875rem', // Kleinere Schriftgröße
+              textTransform: 'none', // Kein Großbuchstaben-Text
+              '&:hover': {
+                backgroundColor: '#0056b3' // Dunklere Farbe beim Hover
+              }
+            }}
+            onClick={() => navigate('/')}
+          >
+            Zurück
+          </Button>
+
         </Paper>
       </Container>
     </Stack>

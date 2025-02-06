@@ -3,8 +3,9 @@
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import { DataGrid } from '@mui/x-data-grid'
+import { useState } from 'react'
 import generateMockData from '../../../data/generateMockData'
-import { useLocation } from '../../Contexts/LocationContext'
+import HospitalModal from '../../Pages/Layout/HospitalModalLayout'
 
 const columns = [
   /* {
@@ -21,8 +22,7 @@ const columns = [
   {
     field: 'Patienten',
     headerName: 'wartende Patienten',
-    width: 90,
-    sortable: true
+    width: 90
   },
   {
     field: 'Wartezeit',
@@ -33,33 +33,46 @@ const columns = [
 ]
 
 const KrankenhausListe = () => {
-  const { filteredLocations } = useLocation()
-  const rows = generateMockData(filteredLocations)
+  const rows = generateMockData()
+
+  const [selectedHospital, setSelectedHospital] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const handleRowClick = (params) => {
+    setSelectedHospital(params.row) // Speichere die angeklickte Zeile
+    setIsModalOpen(true) // Öffne das Modal
+  }
+
+  const handleClose = () => {
+    setIsModalOpen(false) // Schließe das Modal
+    setSelectedHospital(null) // Zurücksetzen
+  }
 
   return (
-    <Box sx={{ height: 400, width: '100%' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          sorting: {
-            sortModel: [{
-              field: 'Wartezeit',
-              sort: 'asc'
-            }]
-          },
-          pagination: {
-            paginationModel: {
-              pageSize: 18
+    <>
+      <Box sx={{ height: 400, width: '100%' }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          onRowClick={handleRowClick}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 18
+              }
             }
-          }
-        }}
-        pageSizeOptions={[18]}
-        // checkboxSelection
-        disableRowSelectionOnClick
-        getRowId={(row) => row.Name}
+          }}
+          pageSizeOptions={[18]}
+              // checkboxSelection
+          disableRowSelectionOnClick
+        />
+      </Box>
+      <HospitalModal
+        open={isModalOpen}
+        onClose={handleClose}
+        hospital={selectedHospital}
       />
-    </Box>
+    </>
   )
 }
 

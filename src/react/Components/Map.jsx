@@ -3,14 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
-import 'leaflet.awesome-markers/dist/leaflet.awesome-markers.css'
-import 'leaflet.awesome-markers/dist/leaflet.awesome-markers'
-import { Link } from '@mui/material'
 import PhoneIcon from '@mui/icons-material/Phone'
-import EmergencyIcon from '@mui/icons-material/Emergency'
+import { Link } from '@mui/material'
+import { calculateDistance, filterLocationsByRadius } from './Distanzmesser'
+import 'leaflet.awesome-markers/dist/leaflet.awesome-markers.css'
+import 'leaflet.awesome-markers/dist/leaflet.awesome-markers.js'
 import listeKrankenhaeuser from '../../data/listeKrankenhaeuser'
-import { filterLocationsByRadius } from './Distanzmesser'
-import { useLocation } from '../Contexts/LocationContext'
 
 // Fix für fehlende Standard-Icons; Bilder werden bei modernen Projekten oft verschoben, daher wird der Standard-Pfad
 // gelöscht und die Marker-Icon-Suche dynamisiert
@@ -23,23 +21,14 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png') // Schattenbild des Markers
 })
 
-/* const MapWithMarkersAndRadius = () => {
+const MapWithMarkersAndRadius = () => {
   const [userPosition, setUserPosition] = useState({
     position: [52.51634963490139, 13.377652149017736],
     text: 'Berlin Zentrum' // Falls kein Standort freigegeben wurde!
-  }) */
-const MapWithMarkersAndRadius = () => {
-  const {
-    filteredLocations,
-    setFilteredLocations,
-    userPosition,
-    setUserPosition,
-    radius,
-    setRadius
-  } = useLocation()
+  })
 
-  /* const [filteredLocations, setFilteredLocations] = useState([])
-  const [radius, setRadius] = useState(10) */
+  const [filteredLocations, setFilteredLocations] = useState([])
+  const [radius, setRadius] = useState(10)
   const [loading, setLoading] = useState(true) // Weil sonst die Karte gebaut wird bevor der Standort erfasst wird (dadurch nicht zentriert!)
 
   const redMarkerIcon = L.divIcon({
@@ -47,14 +36,12 @@ const MapWithMarkersAndRadius = () => {
     html: '<div style="background-color:red; width:20px; height:20px; border-radius:50%;"></div>',
     iconSize: [15, 15] // Größe des Icons
   })
-
-  const navigate = useNavigate()
-
+  useNavigate()
   // Filtere die Locations basierend auf dem Radius
   useEffect(() => {
     const filtered = filterLocationsByRadius(userPosition.position, listeKrankenhaeuser, radius)
     setFilteredLocations(filtered)
-  }, [userPosition.position, radius, setFilteredLocations])
+  }, [userPosition.position, radius])
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -70,7 +57,7 @@ const MapWithMarkersAndRadius = () => {
         }
       )
     }
-  }, [setUserPosition])
+  }, [])
 
   // Handler zum Setzen des Radius
   const handleRadiusChange = (newRadius) => {
@@ -79,7 +66,6 @@ const MapWithMarkersAndRadius = () => {
   if (loading) {
     return <div>Loading...</div> // Ladeanzeige, wenn Position noch nicht ermittelt
   }
-
   return (
     <div style={{ height: '100%', width: '100%', overflow: 'hidden', zIndex: 1 }}>
       <MapContainer style={{ height: '100%', width: '100%' }} center={userPosition.position} zoom={13}>
@@ -90,43 +76,26 @@ const MapWithMarkersAndRadius = () => {
         {filteredLocations.map((location, index) => (
           <Marker key={index} position={location.position}>
             <Popup>
-              <p>
-                Name:
+              <p style={{ margin: '3px 0' }}>
+                <strong>Name:</strong>
                 {' '}
-                { }
                 {location.Name}
               </p>
-              <p>
-                Adresse:
+              <p style={{ margin: '3px 0' }}>
+                <strong>Adresse:</strong>
                 {' '}
-                { }
                 {location.address}
+              </p>
+              <p style={{ margin: '3px 0' }}>
+                <strong>Entfernung:</strong>
+                {' '}
+                {calculateDistance(userPosition.position[0], userPosition.position[1], location.position[0], location.position[1]).toFixed(2)}
+                km
               </p>
               <Link href={`anrufen: ${location.tele}`}>
                 <PhoneIcon sx={{ mr: 1 }} />
                 {location.tele}
               </Link>
-              <Link
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault() // Verhindert die Standard-Aktion des Links
-                  navigate('/alternatives') // Navigiert zur Alternativen-Seite
-                }}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  textDecoration: 'none',
-                  color: '#007BFF',
-                  fontWeight: 'normal',
-                  '&:hover': {
-                    textDecoration: 'underline' // Textdekoration bei Hover
-                  }
-                }}
-              >
-                <EmergencyIcon sx={{ mr: 1 }} />
-                Alternativen
-              </Link>
-
             </Popup>
           </Marker>
         ))}
