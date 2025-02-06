@@ -3,8 +3,9 @@
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import { DataGrid } from '@mui/x-data-grid'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import generateMockData from '../../../data/generateMockData'
+import { useLocation } from '../../Contexts/LocationContext'
 import HospitalModal from '../../Pages/Layout/HospitalModalLayout'
 
 const columns = [
@@ -33,7 +34,11 @@ const columns = [
 ]
 
 const KrankenhausListe = () => {
-  const rows = generateMockData()
+  const { filteredLocations } = useLocation()
+  const rows = useMemo(
+    () => generateMockData(filteredLocations),
+    [filteredLocations]
+  )
 
   const [selectedHospital, setSelectedHospital] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -56,6 +61,12 @@ const KrankenhausListe = () => {
           columns={columns}
           onRowClick={handleRowClick}
           initialState={{
+            sorting: {
+              sortModel: [{
+                field: 'Wartezeit',
+                sort: 'asc'
+              }]
+            },
             pagination: {
               paginationModel: {
                 pageSize: 18
@@ -65,6 +76,7 @@ const KrankenhausListe = () => {
           pageSizeOptions={[18]}
               // checkboxSelection
           disableRowSelectionOnClick
+          getRowId={(row) => row.Name}
         />
       </Box>
       <HospitalModal

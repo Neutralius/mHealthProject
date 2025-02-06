@@ -9,6 +9,7 @@ import { calculateDistance, filterLocationsByRadius } from './Distanzmesser'
 import 'leaflet.awesome-markers/dist/leaflet.awesome-markers.css'
 import 'leaflet.awesome-markers/dist/leaflet.awesome-markers.js'
 import listeKrankenhaeuser from '../../data/listeKrankenhaeuser'
+import { useLocation } from '../Contexts/LocationContext'
 
 // Fix für fehlende Standard-Icons; Bilder werden bei modernen Projekten oft verschoben, daher wird der Standard-Pfad
 // gelöscht und die Marker-Icon-Suche dynamisiert
@@ -21,14 +22,23 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png') // Schattenbild des Markers
 })
 
-const MapWithMarkersAndRadius = () => {
+/* const MapWithMarkersAndRadius = () => {
   const [userPosition, setUserPosition] = useState({
     position: [52.51634963490139, 13.377652149017736],
     text: 'Berlin Zentrum' // Falls kein Standort freigegeben wurde!
-  })
+  }) */
+const MapWithMarkersAndRadius = () => {
+  const {
+    filteredLocations,
+    setFilteredLocations,
+    userPosition,
+    setUserPosition,
+    radius,
+    setRadius
+  } = useLocation()
 
-  const [filteredLocations, setFilteredLocations] = useState([])
-  const [radius, setRadius] = useState(10)
+  /*   const [filteredLocations, setFilteredLocations] = useState([])
+  const [radius, setRadius] = useState(10) */
   const [loading, setLoading] = useState(true) // Weil sonst die Karte gebaut wird bevor der Standort erfasst wird (dadurch nicht zentriert!)
 
   const redMarkerIcon = L.divIcon({
@@ -36,12 +46,14 @@ const MapWithMarkersAndRadius = () => {
     html: '<div style="background-color:red; width:20px; height:20px; border-radius:50%;"></div>',
     iconSize: [15, 15] // Größe des Icons
   })
-  useNavigate()
+  // useNavigate()
+  const navigate = useNavigate()
+
   // Filtere die Locations basierend auf dem Radius
   useEffect(() => {
     const filtered = filterLocationsByRadius(userPosition.position, listeKrankenhaeuser, radius)
     setFilteredLocations(filtered)
-  }, [userPosition.position, radius])
+  }, [userPosition.position, radius, setFilteredLocations])
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -57,7 +69,7 @@ const MapWithMarkersAndRadius = () => {
         }
       )
     }
-  }, [])
+  }, [setUserPosition])
 
   // Handler zum Setzen des Radius
   const handleRadiusChange = (newRadius) => {
