@@ -21,3 +21,8 @@ export const removeLocationFromSessionStorage = () => {
 export const removePermissionFromSessionStorage = () => {
     sessionStorage.removeItem('permission')
 }
+
+export const getLocationFromSessionStorage = () => {
+    const location = sessionStorage.getItem(LOCATION_KEY);
+    return location ? JSON.parse(location) : null;
+};

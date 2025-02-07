@@ -1,45 +1,49 @@
 import 'leaflet/dist/leaflet.css'
-import React from 'react'
+import React, { useState } from 'react'
 import { createRoot } from 'react-dom/client'
-
 import { CssBaseline } from '@mui/material'
-
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-
-import AppLayout from './Pages/Layout/AppLayout'
+import { LocationProvider } from './Contexts/LocationContext'
 import RootRoutes from './Routes/RootRoutes'
 
-const theme = createTheme({
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: defaultTheme => ({
-        html: {
-          width: '100%',
-          height: '100%'
-        },
-        body: {
-          width: '100%',
-          height: '100%',
-          background: defaultTheme.palette.grey[200]
-        },
-        '#app': {
-          width: '100%',
-          height: '100%'
-        }
-      })
+const App = () => {
+  const [darkMode, setDarkMode] = useState(false)
+
+  const theme = createTheme({
+    components: {
+      MuiCssBaseline: {
+        styleOverrides: defaultTheme => ({
+          html: {
+            width: '100%',
+            height: '100%'
+          },
+          body: {
+            width: '100%',
+            height: '100%',
+            background: defaultTheme.palette.grey[darkMode ? 900 : 200]
+          },
+          '#app': {
+            width: '100%',
+            height: '100%'
+          }
+        })
+      }
+    },
+    palette: {
+      mode: darkMode ? 'dark' : 'light'
     }
-  }
-})
+  })
+
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <LocationProvider>
+        <RootRoutes darkMode={darkMode} setDarkMode={setDarkMode} />
+      </LocationProvider>
+    </ThemeProvider>
+  )
+}
 
 const container = document.getElementById('app')
 const root = createRoot(container)
-root.render(
-  <ThemeProvider theme={theme}>
-    <CssBaseline />
-    <AppLayout />
-  </ThemeProvider>
-)
-
-const App = () => <RootRoutes />
-
-export default App
+root.render(<App />)

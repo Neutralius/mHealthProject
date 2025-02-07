@@ -2,20 +2,23 @@
 // Liste mit Berliner Krankenhäusern
 // Quelle: https://medium.com/@biplavmazumdar5/mocking-data-in-react-js-or-javascript-3f278ba7f550
 
-import formatWartezeit from './formatWartezeit'
-import listeKrankenhaeuser from './listeKrankenhaeuser'
+const mockDataCache = new Map()
 
-const generateMockData = () =>
-// Quelle: https://react.dev/learn/rendering-lists
-
-  listeKrankenhaeuser
-    .map((krankenhaus) => {
-      const wartezeit = Math.floor(Math.random() * 180 + 20)
-      return {
-        ...krankenhaus,
-        Patienten: Math.floor(Math.random() * 30 + 10),
-        Wartezeit: formatWartezeit(wartezeit)
-      }
+const generateMockData = (locations = []) => locations.map(location => {
+  if (!mockDataCache.has(location.Name)) {
+    mockDataCache.set(location.Name, {
+      Patienten: Math.floor(Math.random() * 30 + 10),
+      Wartezeit: Math.floor(Math.random() * 180 + 20)
     })
+  }
+
+  // nutze cached data für diesen Standort
+  const cachedData = mockDataCache.get(location.Name)
+  return {
+    ...location,
+    ...cachedData,
+    id: location.Name
+  }
+})
 
 export default generateMockData

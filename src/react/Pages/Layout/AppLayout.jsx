@@ -1,42 +1,25 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Stack,
   Container,
   Typography,
   Paper,
-  Snackbar,
-  Alert
+  IconButton
 } from '@mui/material'
-
+import Brightness4Icon from '@mui/icons-material/Brightness4'
+import Brightness7Icon from '@mui/icons-material/Brightness7'
+import PropTypes from 'prop-types'
 import AppLogo from '../../../assets/favicon.svg'
-import LocationModalLayout from './LocationModalLayout'
-import MapWithMarkers from '../../Components/Map.jsx'
-import DataGridDemo from '../../Components/DataGrid/DataGrid.jsx'
+import LocationManager from './LocationModalLayout'
+import MapWithMarkers from '../../Components/Map'
+import DataGridDemo from '../../Components/DataGrid/DataGrid'
 
-const AppLayout = () => {
+const AppLayout = ({ darkMode, setDarkMode }) => {
   const borderRadius = 6
 
-  const [showModal, setShowModal] = useState(true)
-
-  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'info' })
-
-  const handleModalConfirm = () => {
-    setShowModal(false) // Haupt-Modal schließen
-    setSnackbar({ open: true, message: 'Standort erfolgreich gespeichert!', severity: 'success' })
-  }
-
-  const handleModalDecline = () => {
-    setShowModal(false)
-    setSnackbar({ open: true, message: 'Standortfreigabe abgelehnt!', severity: 'warning' })
-  }
-
-  return (
-    <>
-      <LocationModalLayout
-        open={showModal}
-        onConfirm={handleModalConfirm}
-        onDecline={handleModalDecline}
-      />
+    return (
+        <>
+      <LocationManager/>
       <Stack
         direction="row"
         justifyContent="center"
@@ -75,6 +58,13 @@ const AppLayout = () => {
             <Typography variant="h5" fontWeight="bold">
               Notaufnahmen Berlin
             </Typography>
+            <IconButton
+              sx={{ ml: 1 }}
+              onClick={() => setDarkMode(!darkMode)}
+              color="inherit"
+            >
+              {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
           </Stack>
           <Paper
             elevation={6}
@@ -129,20 +119,14 @@ const AppLayout = () => {
             </Stack>
           </Paper>
         </Container>
-
       </Stack>
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={4000}
-        onClose={() => setSnackbar({ ...snackbar, open: false })}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Alert severity={snackbar.severity} sx={{ width: '100%' }}>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
     </>
   )
+}
+
+AppLayout.propTypes = {
+  darkMode: PropTypes.bool.isRequired,
+  setDarkMode: PropTypes.func.isRequired
 }
 
 export default AppLayout

@@ -3,7 +3,10 @@
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import { DataGrid } from '@mui/x-data-grid'
+import { useState, useMemo } from 'react'
 import generateMockData from '../../../data/generateMockData'
+import { useLocation } from '../../Contexts/LocationContext'
+import HospitalModal from '../../Pages/Layout/HospitalModalLayout'
 
 const columns = [
   /* {
@@ -30,25 +33,59 @@ const columns = [
   }
 ]
 
-export default function DataGridDemo() {
-  const rows = generateMockData()
+const KrankenhausListe = () => {
+  const { filteredLocations } = useLocation()
+  const rows = useMemo(
+    () => generateMockData(filteredLocations),
+    [filteredLocations]
+  )
+
+  const [selectedHospital, setSelectedHospital] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const handleRowClick = (params) => {
+    setSelectedHospital(params.row) // Speichere die angeklickte Zeile
+    setIsModalOpen(true) // Öffne das Modal
+  }
+
+  const handleClose = () => {
+    setIsModalOpen(false) // Schließe das Modal
+    setSelectedHospital(null) // Zurücksetzen
+  }
 
   return (
-    <Box sx={{ height: 400, width: '100%' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 10
+    <>
+      <Box sx={{ height: 400, width: '100%' }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          onRowClick={handleRowClick}
+          initialState={{
+            sorting: {
+              sortModel: [{
+                field: 'Wartezeit',
+                sort: 'asc'
+              }]
+            },
+            pagination: {
+              paginationModel: {
+                pageSize: 18
+              }
             }
-          }
-        }}
-        pageSizeOptions={[10]}
-        checkboxSelection
-        disableRowSelectionOnClick
+          }}
+          pageSizeOptions={[18]}
+              // checkboxSelection
+          disableRowSelectionOnClick
+          getRowId={(row) => row.Name}
+        />
+      </Box>
+      <HospitalModal
+        open={isModalOpen}
+        onClose={handleClose}
+        hospital={selectedHospital}
       />
-    </Box>
+    </>
   )
 }
+
+export default KrankenhausListe
