@@ -30,6 +30,7 @@ yarn start:dev
 - Material UI Library : https://mui.com/material-ui/getting-started/
 - M2 (für Icons etc.): https://m2.material.io
 - Entwicklungsumgebung: WebStorm IDE
+- Leaflet für die Map: https://react-leaflet.js.org/
 
 #### weitere Materialien des Projekts:
 - Link zum Miro Board: https://miro.com/app/board/uXjVLKqcqkE=/
