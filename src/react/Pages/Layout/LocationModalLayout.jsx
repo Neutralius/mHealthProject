@@ -5,7 +5,7 @@ import {
   getLocationFromSessionStorage,
   removeLocationFromSessionStorage,
   removePermissionFromSessionStorage
-} from '../../../Utils/SessionStorageUtils'
+} from '../../../utils/SessionStorageUtils'
 
 const GEOLOCATION_OPTIONS = {
   enableHighAccuracy: true,
